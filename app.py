@@ -1,3 +1,4 @@
+
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -5,6 +6,8 @@ from waitress import serve
 import os
 import requests
 from dotenv import load_dotenv
+from waitress import serve
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -49,11 +52,11 @@ def get_decision():
 
 if __name__ == "__main__":
     print("Starting server...")  # Add another print to check if the app starts running
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    serve(app, host='0.0.0.0', port=8080)
 
 
-
-"""  from flask import Flask, request, jsonify
+"""
+  from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import spacy
