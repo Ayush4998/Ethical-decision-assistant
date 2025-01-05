@@ -12,18 +12,6 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-# Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Ayushgos4998@localhost/ethical_assistant'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)  # Initialize SQLAlchemy
-
-# Session configuration
-app.config['SESSION_TYPE'] = 'sqlalchemy'
-app.config['SESSION_SQLALCHEMY'] = db
-app.config['SESSION_PERMANENT'] = False
-app.config['SESSION_USE_SIGNER'] = True
-app.config['SECRET_KEY'] = os.urandom(24)  # Generate a random secret key
 
 # Cohere API configuration
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")  # Ensure to set your Cohere API key in the environment
