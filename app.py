@@ -9,12 +9,13 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+print("Initializing Flask App...")  # Add a print to see if the app starts
+
 app = Flask(__name__, static_folder='static')
 CORS(app)
 
 # Cohere API configuration
-COHERE_API_KEY = os.getenv("COHERE_API_KEY")  # Ensure to set your Cohere API key in the environment
-
+COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 headers = {
     'Authorization': f'Bearer {COHERE_API_KEY}',
     'Content-Type': 'application/json'
@@ -29,28 +30,26 @@ def get_decision():
         return jsonify({'bot_response': "Please provide a scenario or question you'd like help with."})
 
     try:
-        # Make a POST request to Cohere API for text generation
         url = "https://api.cohere.ai/generate"
         body = {
-            'model': 'command-r-plus',  # Specify the model you want to use
-            'prompt': f"Give the best options to solve this scenario under 150 charactersgit: {user_message}",
+            'model': 'command-r-plus', 
+            'prompt': f"Give the best options to solve this scenario under 150 characters: {user_message}",
             'max_tokens': 150
         }
 
         response = requests.post(url, headers=headers, json=body)
-        
-        # Check if the response is successful
+
         if response.status_code == 200:
             bot_response = response.json()['text']
             return jsonify({'bot_response': bot_response})
         else:
             return jsonify({'bot_response': f"Error from Cohere API: {response.text}"})
-    
     except Exception as e:
-        return jsonify({'bot_response': f"An error occurred while processing your request: {str(e)}"})
+        return jsonify({'bot_response': f"An error occurred: {str(e)}"})
 
 if __name__ == "__main__":
-    serve(app, host='0.0.0.0', port=8080)
+    print("Starting server...")  # Add another print to check if the app starts running
+    app.run(host='0.0.0.0', port=8080, debug=True)
 
 
 
