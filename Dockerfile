@@ -1,5 +1,5 @@
+# Use an official Python runtime as a parent image
 FROM python:3.12-slim
-
 
 # Install system dependencies required by some packages
 RUN apt-get update && apt-get install -y \
@@ -7,20 +7,19 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the requirements file
+# Copy the requirements file and install the dependencies
 COPY requirements.txt /app/
-
-# Install the required Python packages
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code
+# Copy the entire application code into the container
 COPY . /app/
 
-# Expose the port for the Flask app
-EXPOSE 5000
+# Expose port 8080 (recommended by Railway)
+EXPOSE 8080
 
-# Start the application
-CMD ["python", "app.py"]
+# Command to run the Flask app using Gunicorn (for production)
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
