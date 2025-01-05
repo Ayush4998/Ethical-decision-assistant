@@ -1,17 +1,16 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from waitress import serve
 import os
 import requests
-
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
+
 app = Flask(__name__, static_folder='static')
-
 CORS(app)
-
 
 # Cohere API configuration
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")  # Ensure to set your Cohere API key in the environment
@@ -51,8 +50,8 @@ def get_decision():
         return jsonify({'bot_response': f"An error occurred while processing your request: {str(e)}"})
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    serve(app, host='0.0.0.0', port=8080)
+
 
 
 """  from flask import Flask, request, jsonify
