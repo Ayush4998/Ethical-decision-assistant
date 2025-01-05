@@ -32,22 +32,23 @@ def get_decision():
         return jsonify({'bot_response': "Please provide a scenario or question you'd like help with."})
 
     try:
+        # Make a POST request to Cohere API for text generation
         url = "https://api.cohere.ai/generate"
         body = {
-            'model': 'command-r-plus', 
+            'model': 'command-r-plus',  # Specify the model you want to use
             'prompt': f"Give the best options to solve this scenario under 150 characters: {user_message}",
             'max_tokens': 150
         }
 
         response = requests.post(url, headers=headers, json=body)
-
+        
         if response.status_code == 200:
             bot_response = response.json()['text']
             return jsonify({'bot_response': bot_response})
         else:
             return jsonify({'bot_response': f"Error from Cohere API: {response.text}"})
     except Exception as e:
-        return jsonify({'bot_response': f"An error occurred: {str(e)}"})
+        return jsonify({'bot_response': f"An error occurred while processing your request: {str(e)}"})
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
