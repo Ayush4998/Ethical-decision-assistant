@@ -10,16 +10,18 @@ RUN apt-get update && apt-get install -y \
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the requirements file and install the dependencies
+# Copy only the necessary files for installation first (for Docker layer caching)
 COPY requirements.txt /app/
+
+# Install the Python dependencies
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the entire application code into the container
+# Copy all application files (including the build directory for React)
 COPY . /app/
 
-# Expose port 8080 (recommended by Railway)
+# Expose the port for the application (8080 is Railway's recommended port)
 EXPOSE 8080
 
-# Command to run the Flask app using Gunicorn (for production)
+# Run the Flask app using Gunicorn for production
 CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]

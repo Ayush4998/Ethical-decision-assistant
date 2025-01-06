@@ -1,19 +1,17 @@
 
-from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from waitress import serve
 import os
 import requests
 from dotenv import load_dotenv
 
-
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
-print("Initializing Flask App...")  # Add a print to see if the app starts
+print("Initializing Flask App...")
 
-app = Flask(__name__, static_folder='static')
+# Initialize Flask app
+app = Flask(__name__, static_folder='build')
 CORS(app)
 
 # Cohere API configuration
@@ -32,30 +30,35 @@ def get_decision():
         return jsonify({'bot_response': "Please provide a scenario or question you'd like help with."})
 
     try:
-        # Make a POST request to Cohere API for text generation
         url = "https://api.cohere.ai/generate"
         body = {
-            'model': 'command-r-plus',  # Specify the model you want to use
+            'model': 'command-r-plus',
             'prompt': f"Give the best options to solve this scenario under 150 characters: {user_message}",
             'max_tokens': 150
         }
 
         response = requests.post(url, headers=headers, json=body)
-        
+
         if response.status_code == 200:
             bot_response = response.json()['text']
             return jsonify({'bot_response': bot_response})
         else:
             return jsonify({'bot_response': f"Error from Cohere API: {response.text}"})
     except Exception as e:
-        return jsonify({'bot_response': f"An error occurred while processing your request: {str(e)}"})
-@app.route('/')
-def home():
-    return "Welcome to the Ethical Decision Assistant API!"
+        return jsonify({'bot_response': f"An error occurred: {str(e)}"})
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(f"build/{path}"):
+        return send_from_directory('build', path)
+    else:
+        return send_from_directory('build', 'index.html')
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port)
+
 
 
 """
