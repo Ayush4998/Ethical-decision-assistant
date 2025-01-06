@@ -10,7 +10,7 @@ load_dotenv()
 print("Initializing Flask App...")
 
 # Initialize Flask app
-app = Flask(__name__, static_folder='build')
+app = Flask(__name__, static_folder='static')
 CORS(app, origins=["*"])
 
 # Cohere API configuration
