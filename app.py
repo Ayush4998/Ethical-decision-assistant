@@ -49,6 +49,9 @@ def get_decision():
             return jsonify({'bot_response': f"Error from Cohere API: {response.text}"})
     except Exception as e:
         return jsonify({'bot_response': f"An error occurred while processing your request: {str(e)}"})
+@app.route('/')
+def home():
+    return "Welcome to the Ethical Decision Assistant API!"
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
