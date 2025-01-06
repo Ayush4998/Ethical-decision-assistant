@@ -53,9 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then(response => response.json())
         .then(data => {
-          // Append bot response from Flask API
-          appendMessage("Bot", data.bot_response || "Sorry, I couldn't process that.");
+          console.log("Received response from API:", data); // Check the API response in the console
+          const botResponse = data.bot_response || "Sorry, I couldn't process that.";
+          appendMessage("Bot", botResponse);
         })
+        
         .catch(error => {
           console.error('Error:', error);
           appendMessage("Bot", "Sorry, there was an error.");
