@@ -10,7 +10,7 @@ load_dotenv()
 print("Initializing Flask App...")
 
 # Initialize Flask app
-app = Flask(__name__, static_folder='build')
+app = Flask(__name__, static_folder='build', template_folder='build')
 CORS(app, origins=["*"])
 
 # Cohere API configuration
@@ -47,8 +47,10 @@ def get_decision():
     except Exception as e:
         return jsonify({'bot_response': f"An error occurred: {str(e)}"})
 
+@app.route('/')
+def index():
+    return send_from_directory(app.static_folder, 'index.html')
 
-@app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
     if path != "" and os.path.exists(f"build/{path}"):
@@ -56,10 +58,10 @@ def serve(path):
     else:
         return send_from_directory('build', 'index.html')
 
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
