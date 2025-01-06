@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
       inputField.value = "";
 
       // Send user input to Flask API and get bot response
-      fetch('http://127.0.0.1:5000/api/decision', {  // Assuming /api/decision is the correct endpoint
+      fetch('https://ethical-decision-assistant-production.up.railway.app/api/decision', { // Assuming /api/decision is the correct endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
