@@ -11,7 +11,7 @@ print("Initializing Flask App...")
 
 # Initialize Flask app
 app = Flask(__name__, static_folder='build')
-CORS(app)
+CORS(app, origins=["*"])
 
 # Cohere API configuration
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")
