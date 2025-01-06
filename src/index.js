@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         body: JSON.stringify({ message: userInput }),  // Send user message to Flask
       })
+      
         .then(response => response.json())
         .then(data => {
           console.log("Received response from API:", data); // Check the API response in the console
