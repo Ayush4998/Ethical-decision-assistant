@@ -44,22 +44,21 @@ document.addEventListener("DOMContentLoaded", function () {
       inputField.value = "";
 
       // Send user input to Flask API and get bot response
-      fetch('https://ethical-decision-assistant-production.up.railway.app/api/decision', { // Corrected URL
+      const apiUrl = 'https://ethical-decision-assistant-production.up.railway.app/api/decision';  // Replace with your Railway app's URL
+
+      fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ message: userInput }),
       })
-      
-      
         .then(response => response.json())
         .then(data => {
-          console.log("Received response from API:", data); // Check the API response in the console
+          console.log("Received response from API:", data);  // Check the API response in the console
           const botResponse = data.bot_response || "Sorry, I couldn't process that.";
           appendMessage("Bot", botResponse);
         })
-        
         .catch(error => {
           console.error('Error:', error);
           appendMessage("Bot", "Sorry, there was an error.");
