@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
@@ -23,13 +22,14 @@ headers = {
 
 @app.route('/api/decision', methods=['POST'])
 def get_decision():
-    data = request.get_json()
-    user_message = data.get('message', '')
-
-    if not user_message:
-        return jsonify({'bot_response': "Please provide a scenario or question you'd like help with."})
-
     try:
+        data = request.get_json()  # This ensures that Flask expects JSON data
+        user_message = data.get('message', '')
+
+        if not user_message:
+            return jsonify({'bot_response': "Please provide a scenario or question you'd like help with."})
+
+        # If a message is provided, interact with Cohere API to get response
         url = "https://api.cohere.ai/generate"
         body = {
             'model': 'command-r-plus',
@@ -47,6 +47,7 @@ def get_decision():
     except Exception as e:
         return jsonify({'bot_response': f"An error occurred: {str(e)}"})
 
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
@@ -54,6 +55,7 @@ def serve(path):
         return send_from_directory('build', path)
     else:
         return send_from_directory('build', 'index.html')
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
