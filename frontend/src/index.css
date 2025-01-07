@@ -60,21 +60,22 @@ body {
   overflow-y: auto;
   margin-bottom: 1rem;
   min-height: calc(100vh - 250px);
+  display: flex;
+  flex-direction: column;
 }
 
 .message {
   display: flex;
   margin-bottom: 1rem;
-  max-width: 80%;
+  align-items: flex-start;
 }
 
 .bot-message {
-  margin-right: auto;
+  align-self: flex-start;
 }
 
 .user-message {
-  margin-left: auto;
-  flex-direction: row-reverse;
+  align-self: flex-end;
 }
 
 .message p {
@@ -82,16 +83,19 @@ body {
   border-radius: 1rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
+  max-width: 80%;
 }
 
 .bot-message p {
   background-color: rgb(219, 234, 254);
   color: rgb(31, 41, 55);
+  border-bottom-left-radius: 0.25rem;
 }
 
 .user-message p {
   background-color: rgb(37, 99, 235);
   color: white;
+  border-bottom-right-radius: 0.25rem;
 }
 
 /* Input area styles */
@@ -175,8 +179,8 @@ body {
     padding: 0.5rem;
   }
   
-  .message {
-    max-width: 90%;
+  .message p {
+    max-width: 85%;
   }
   
   .header h1 {
