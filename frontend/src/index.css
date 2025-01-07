@@ -21,11 +21,6 @@ body {
 .header {
   background-color: white;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-
-.header-content {
-  max-width: 64rem;
-  margin: 0 auto;
   padding: 1rem;
   display: flex;
   align-items: center;
@@ -65,22 +60,21 @@ body {
   overflow-y: auto;
   margin-bottom: 1rem;
   min-height: calc(100vh - 250px);
-  display: flex;
-  flex-direction: column;
 }
 
 .message {
   display: flex;
   margin-bottom: 1rem;
-  align-items: flex-start;
+  max-width: 80%;
 }
 
 .bot-message {
-  align-self: flex-start;
+  margin-right: auto;
 }
 
 .user-message {
-  align-self: flex-end;
+  margin-left: auto;
+  flex-direction: row-reverse;
 }
 
 .message p {
@@ -88,19 +82,16 @@ body {
   border-radius: 1rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
-  max-width: 80%;
 }
 
 .bot-message p {
   background-color: rgb(219, 234, 254);
   color: rgb(31, 41, 55);
-  border-bottom-left-radius: 0.25rem;
 }
 
 .user-message p {
   background-color: rgb(37, 99, 235);
   color: white;
-  border-bottom-right-radius: 0.25rem;
 }
 
 /* Input area styles */
@@ -109,6 +100,7 @@ body {
   gap: 0.5rem;
   padding: 1rem;
   background-color: white;
+  border-top: 1px solid rgb(229, 231, 235);
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
@@ -138,8 +130,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
 }
 
 #send-button:hover:not(:disabled) {
@@ -156,11 +146,6 @@ body {
 .footer {
   background-color: white;
   border-top: 1px solid rgb(229, 231, 235);
-}
-
-.footer-content {
-  max-width: 64rem;
-  margin: 0 auto;
   padding: 1rem;
   text-align: center;
 }
@@ -190,8 +175,8 @@ body {
     padding: 0.5rem;
   }
   
-  .message p {
-    max-width: 85%;
+  .message {
+    max-width: 90%;
   }
   
   .header h1 {
