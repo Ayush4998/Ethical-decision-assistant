@@ -4,9 +4,9 @@ import reportWebVitals from './reportWebVitals';
 // Ensure that DOM content is fully loaded before selecting elements
 document.addEventListener("DOMContentLoaded", function () {
   // Select necessary DOM elements
-  const inputField = document.getElementById("message-input");
+  const inputField = document.getElementById("user-input");
   const sendButton = document.getElementById("send-button");
-  const messageArea = document.getElementById("messages").querySelector(".space-y-4");
+  const messageArea = document.getElementById("message-area");
 
   // Function to append message to the conversation area
   function appendMessage(sender, text) {
@@ -14,41 +14,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Add classes based on sender (user or bot)
     if (sender === "You") {
-      messageDiv.classList.add("flex", "w-full", "mb-4", "justify-end");
-      messageDiv.innerHTML = `
-        <div class="flex items-start space-x-reverse">
-          <div class="p-2 rounded-full bg-gray-100 text-gray-600">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M8 12h8"></path>
-              <path d="M12 8v8"></path>
-            </svg>
-          </div>
-          <div class="rounded-2xl px-4 py-2 bg-blue-600 text-white">
-            <p class="text-sm md:text-base">${text}</p>
-          </div>
-        </div>`;
+      messageDiv.classList.add("message", "user-message");
     } else {
-      messageDiv.classList.add("flex", "w-full", "mb-4", "justify-start");
-      messageDiv.innerHTML = `
-        <div class="flex items-start space-x-2">
-          <div class="p-2 rounded-full bg-blue-100 text-blue-600">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 8V4H8"></path>
-              <path d="M12 4h4"></path>
-              <rect x="4" y="8" width="16" height="12" rx="2"></rect>
-              <path d="M2 14h2"></path>
-              <path d="M20 14h2"></path>
-              <path d="M15 13v2"></path>
-              <path d="M9 13v2"></path>
-            </svg>
-          </div>
-          <div class="rounded-2xl px-4 py-2 bg-blue-50 text-gray-800">
-            <p class="text-sm md:text-base">${text}</p>
-          </div>
-        </div>`;
+      messageDiv.classList.add("message", "bot-message");
     }
 
+    const messageText = document.createElement("p");
+    messageText.textContent = text;
+
+    messageDiv.appendChild(messageText);
     messageArea.appendChild(messageDiv);
 
     // Automatically scroll to the latest message
