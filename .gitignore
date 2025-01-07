@@ -1,5 +1,17 @@
-.env
+
+# Node modules
+node_modules/
+
+# Frontend build artifacts
+frontend/build/
+
+# Python environment files
 __pycache__/
 *.pyc
-venv/
-node_modules/
+
+# Environment files
+.env
+
+# Other
+.DS_Store
+.vscode/
